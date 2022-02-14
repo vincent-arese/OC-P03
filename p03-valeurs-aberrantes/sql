@@ -1,0 +1,67 @@
+ */ _____________________________________________________________________________________________________________________________________________
+    | Dvf Valeur Abrerante																														 |
+    |____________________________________________________________________________________________________________________________________________|
+*/
+
+--- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- 
+--- Valeur aberante Nbr de piece et Surfacebiens immobilier ( par exemple Appartement de 50m2 avec 11 pieces !  ou 10 piéces pour 11 m2 !)
+--- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- 
+SELECT typelocal ,cadastrenombrepiecesprincipales, count(cadastrenombrepiecesprincipales) as nbr ,count(cadastrenombrepiecesprincipales)/(select count(typelocalcode)*100 as nbr_appt FROM "P03VASQL".dvf_view as totalAppt where mutationyear = 2020 and mutationquarter <=2 and typelocalcode =2)as "%",cadastresurfacereellebati,cadastrelot1surfacecarrez,mutationidnun
+FROM "P03VASQL".dvf_view
+where mutationyear = 2020 and mutationquarter<=2 and typelocalcode=2 and cadastrenombrepiecesprincipales>=5
+group by cadastrenombrepiecesprincipales, typelocal ,cadastresurfacereellebati,cadastrelot1surfacecarrez,mutationidnun
+order by cadastrenombrepiecesprincipales desc;
+
+-- recherche valeur abérante dans le raw 
+select *
+FROM "P03VASQL".raw
+ where rawid=16302  or rawid=34119 or rawid=23998 or rawid=30001 or rawid=3056;
+
+select *
+FROM "P03VASQL".raw
+ where rawid in (16302, 34119, 23998 , 30001,3056);
+
+--- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- 
+-- Appartempent avec surface carez > Surface relle bati ! 
+--Data Valeur aberante :  adastresurfacereellebati < cadastrelot1surfacecarrez
+--- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- 
+select 
+(SELECT count(*) as countpb FROM "P03VASQL".dvf_view as Pb where cadastresurfacereellebati<cadastrelot1surfacecarrez ),
+(SELECT count(*) as counttotal FROM "P03VASQL".dvf_view as total) 
+from "P03VASQL".dvf_view limit 1;
+
+-- liste data aberante  ou cadastresurfacereellebati < cadastrelot1surfacecarrez
+SELECT * FROM "P03VASQL".dvf_view as Pb where cadastresurfacereellebati<cadastrelot1surfacecarrez; */ _____________________________________________________________________________________________________________________________________________
+    | Dvf Valeur Abrerante																														 |
+    |____________________________________________________________________________________________________________________________________________|
+*/
+
+--- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- 
+--- Valeur aberante Nbr de piece et Surfacebiens immobilier ( par exemple Appartement de 50m2 avec 11 pieces !  ou 10 piéces pour 11 m2 !)
+--- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- 
+SELECT typelocal ,cadastrenombrepiecesprincipales, count(cadastrenombrepiecesprincipales) as nbr ,count(cadastrenombrepiecesprincipales)/(select count(typelocalcode)*100 as nbr_appt FROM "P03VASQL".dvf_view as totalAppt where mutationyear = 2020 and mutationquarter <=2 and typelocalcode =2)as "%",cadastresurfacereellebati,cadastrelot1surfacecarrez,mutationidnun
+FROM "P03VASQL".dvf_view
+where mutationyear = 2020 and mutationquarter<=2 and typelocalcode=2 and cadastrenombrepiecesprincipales>=5
+group by cadastrenombrepiecesprincipales, typelocal ,cadastresurfacereellebati,cadastrelot1surfacecarrez,mutationidnun
+order by cadastrenombrepiecesprincipales desc;
+
+-- recherche valeur abérante dans le raw 
+select *
+FROM "P03VASQL".raw
+ where rawid=16302  or rawid=34119 or rawid=23998 or rawid=30001 or rawid=3056;
+
+select *
+FROM "P03VASQL".raw
+ where rawid in (16302, 34119, 23998 , 30001,3056);
+
+--- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- 
+-- Appartempent avec surface carez > Surface relle bati ! 
+--Data Valeur aberante :  adastresurfacereellebati < cadastrelot1surfacecarrez
+--- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- 
+select 
+(SELECT count(*) as countpb FROM "P03VASQL".dvf_view as Pb where cadastresurfacereellebati<cadastrelot1surfacecarrez ),
+(SELECT count(*) as counttotal FROM "P03VASQL".dvf_view as total) 
+from "P03VASQL".dvf_view limit 1;
+
+-- liste data aberante  ou cadastresurfacereellebati < cadastrelot1surfacecarrez
+SELECT * FROM "P03VASQL".dvf_view as Pb where cadastresurfacereellebati<cadastrelot1surfacecarrez;
